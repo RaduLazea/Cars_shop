@@ -1,0 +1,21 @@
+﻿@model ShopCartViewModel
+
+<div class="container mt-4">
+
+    <h3 class="@(Model.shopCart.listShopItems.Count == 0 ? "" : "d-none")">You should add items to the cart</h3>
+
+    @foreach(var el in Model.shopCart.listShopItems) {
+        <div class="alert alert-warning mt-3 d-flex justify-content-between">
+            <div class="item-info text-start">
+                <b>Car:</b> @el.car.Name <br />
+                <b>Price:</b> @el.car.Price.ToString("C", CultureInfo.CreateSpecificCulture("eu-ES")) <br />
+            </div>
+            <a asp-controller="ShopCart" asp-action="Delete" asp-route-Id="@el.Id">
+                <img src="~/img/closeBtn.png" style="margin: 8px 0px; height: 32px;" alt="Delete item">
+            </a>
+        </div>
+    }
+    <hr />
+    <!-- <a class="btn btn-success" asp-controller="Order" asp-action="Checkout">Complete Order</a> -->
+    <button class="btn btn-success @(Model.shopCart.listShopItems.Count == 0 ? "d-none" : "")" onclick="location.href='@Url.Action("Checkout", "Order")'" @(Model.shopCart.listShopItems.Count == 0 ? "disabled" : "")>Complete Order</button>
+</div>
